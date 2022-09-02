@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cheng.rrs.common.result.Result;
 import com.cheng.rrs.common.utils.MD5;
-import com.cheng.rrs.hosp.service.HospitalService;
+import com.cheng.rrs.hosp.service.HospitalSetService;
 import com.cheng.rrs.model.hosp.HospitalSet;
 import com.cheng.rrs.vo.hosp.HospitalSetQueryVo;
 import io.swagger.annotations.Api;
@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +24,7 @@ import java.util.Random;
 public class HospitalSerController {
     //注入service
     @Autowired
-    HospitalService hospitalService;
+    HospitalSetService hospitalService;
 
     /**
      * 查询素有医院信息

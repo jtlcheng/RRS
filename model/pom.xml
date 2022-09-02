@@ -12,10 +12,14 @@
     <artifactId>model</artifactId>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
+        <!--Lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+
         <!--mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>

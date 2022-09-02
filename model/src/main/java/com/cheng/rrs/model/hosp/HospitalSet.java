@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -15,6 +16,7 @@ import lombok.Data;
  *
  * @author qy
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel(description = "医院设置")
 @TableName("hospital_set")
