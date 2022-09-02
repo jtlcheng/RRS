@@ -3,7 +3,6 @@ package com.cheng.rrs.hosp.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.cheng.rrs.hosp.repository.ScheduleRepository;
 import com.cheng.rrs.hosp.service.ScheduleService;
-import com.cheng.rrs.model.hosp.Department;
 import com.cheng.rrs.model.hosp.Schedule;
 import com.cheng.rrs.vo.hosp.ScheduleQueryVo;
 import org.springframework.beans.BeanUtils;
