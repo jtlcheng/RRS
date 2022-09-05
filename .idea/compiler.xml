@@ -10,6 +10,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="common_util" />
         <module name="service_user" />
+        <module name="service-cmn-client" />
         <module name="service_util" />
         <module name="model" />
         <module name="hosp-manage" />
@@ -25,6 +26,8 @@
       <module name="model" target="1.8" />
       <module name="RRS_PARENT" target="1.8" />
       <module name="service" target="1.8" />
+      <module name="service-client" target="1.8" />
+      <module name="service-cmn-client" target="1.8" />
       <module name="service_cmn" target="1.8" />
       <module name="service_hosp" target="1.8" />
       <module name="service_user" target="1.8" />
@@ -40,6 +43,8 @@
       <module name="host-manage" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="service" options="-parameters" />
+      <module name="service-client" options="-parameters" />
+      <module name="service-cmn-client" options="-parameters" />
       <module name="service_cmn" options="-parameters" />
       <module name="service_hosp" options="-parameters" />
       <module name="service_user" options="-parameters" />

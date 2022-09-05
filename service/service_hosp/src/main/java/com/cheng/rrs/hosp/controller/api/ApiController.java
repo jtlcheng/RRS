@@ -26,6 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * mongodb实现接口
+ * @author liucheng
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("api/hosp")
 @Api(tags = "医院管理接口")

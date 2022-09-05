@@ -12,7 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
-
+/**
+ * 医院排班接口实现方法
+ * @author cheng
+ * @version 1.0
+ */
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 

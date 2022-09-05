@@ -1,5 +1,6 @@
 package com.cheng.rrs.model.base;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import lombok.Data;
@@ -17,9 +18,11 @@ public class BaseMongoEntity implements Serializable {
     @Id
     private String id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
 

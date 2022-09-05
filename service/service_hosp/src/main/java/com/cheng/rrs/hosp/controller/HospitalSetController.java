@@ -17,17 +17,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * 医院设置管理
+ * @author liucheng
+ * @version 1.0
+ */
 @Api(tags = "医院设置管理")
 @RestController
 @RequestMapping("/admin/hosp/hospitalSet")
 @CrossOrigin
-public class HospitalSerController {
+public class HospitalSetController {
     //注入service
     @Autowired
     HospitalSetService hospitalService;
 
     /**
-     * 查询素有医院信息
+     * 查询所有医院信息
      * @return
      */
     @ApiOperation(value = "获取所有医院设置")
