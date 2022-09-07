@@ -46,6 +46,7 @@
     <orderEntry type="library" name="Maven: org.mapstruct:mapstruct:1.2.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: io.swagger:swagger-annotations:1.5.19" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.1" level="project" />
     <orderEntry type="module" module-name="model" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.10" level="project" />
     <orderEntry type="module" module-name="common_util" />
@@ -75,7 +76,6 @@
     <orderEntry type="library" name="Maven: org.jvnet.staxex:stax-ex:1.8.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
-    <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.2.1.RELEASE" level="project" />

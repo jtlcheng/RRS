@@ -22,7 +22,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/hosp/hospital")
 @Api(tags = "医院列表接口")
-@CrossOrigin
 public class HospitalController {
     @Autowired
     private HospitalService hospitalService;
@@ -69,4 +68,5 @@ public class HospitalController {
         Map<String,Object> map=hospitalService.getHospById(id);
         return Result.ok(map);
     }
+
 }
