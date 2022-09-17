@@ -31,6 +31,10 @@ spring:
     url: jdbc:mysql://localhost:3306/yygh_manage?characterEncoding=utf-8&useSSL=false
     username: root
     password: "033413"
+    #url: jdbc:mysql://43:139:20:175:3306/yygh_manage?characterEncoding=utf-8&useSSL=false
+    #username: RRS
+    # password: "033413Lc"
+    #driver-class-name: com.mysql.jdbc.Driver
     hikari:
       connection-test-query: SELECT 1
       connection-timeout: 60000

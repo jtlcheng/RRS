@@ -2,10 +2,8 @@ package com.cheng.rrs.hosp.controller;
 
 import com.cheng.rrs.common.result.Result;
 import com.cheng.rrs.hosp.service.HospitalService;
-import com.cheng.rrs.hosp.service.HospitalSetService;
 import com.cheng.rrs.model.hosp.Hospital;
 import com.cheng.rrs.vo.hosp.HospitalQueryVo;
-import com.cheng.rrs.vo.hosp.HospitalSetQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

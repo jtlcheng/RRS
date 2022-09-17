@@ -13,8 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +31,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     //根据数据id查询了数据列表
     @Override
     @Cacheable(value = "dict",keyGenerator = "keyGenerator")
-    @Transactional(propagation= Propagation.REQUIRED)
     public List<Dict> findChildData(Long id) {
         QueryWrapper<Dict> wrapper=new QueryWrapper<>();
         wrapper.eq("parent_id",id);
