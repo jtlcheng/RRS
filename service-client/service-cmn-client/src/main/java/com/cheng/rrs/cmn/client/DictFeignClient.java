@@ -29,4 +29,5 @@ public interface DictFeignClient {
     @ApiOperation("根据value查询")
     @GetMapping("/admin/cmn/dict/getName/{value}")
     public String getName(@PathVariable("value")String value);
+
 }

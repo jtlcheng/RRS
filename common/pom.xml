@@ -14,6 +14,7 @@
     <modules>
         <module>common_util</module>
         <module>service_util</module>
+        <module>rabbit-util</module>
     </modules>
     <version>0.0.1-SNAPSHOT</version>
 

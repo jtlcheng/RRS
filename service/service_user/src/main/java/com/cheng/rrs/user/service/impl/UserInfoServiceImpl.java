@@ -2,19 +2,27 @@ package com.cheng.rrs.user.service.impl;
 
 import com.alibaba.excel.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheng.rrs.common.exception.YyghException;
 import com.cheng.rrs.common.helper.JwtHelper;
 import com.cheng.rrs.common.result.ResultCodeEnum;
+import com.cheng.rrs.enums.AuthStatusEnum;
+import com.cheng.rrs.model.user.Patient;
 import com.cheng.rrs.model.user.UserInfo;
 import com.cheng.rrs.user.mapper.UserInfoMapper;
+import com.cheng.rrs.user.service.PatientService;
 import com.cheng.rrs.user.service.UserInfoService;
 import com.cheng.rrs.vo.user.LoginVo;
+import com.cheng.rrs.vo.user.UserAuthVo;
+import com.cheng.rrs.vo.user.UserInfoQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +35,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private PatientService patientService;
 
     @Override
     public Map<String, Object> loginUser(LoginVo loginVo) {
@@ -104,6 +114,99 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         System.out.println("UserInfo"+openid);
         UserInfo userInfo = baseMapper.selectOne(queryWrapper);
         System.out.println(userInfo);
+        return userInfo;
+    }
+
+    //用户认证接口
+    @Override
+    public void userAuth(Long userId, UserAuthVo userAuthVo) {
+        //根据用户id查询用户信息
+        UserInfo userInfo = baseMapper.selectById(userId);
+        //设置认证信息
+        //认证人信息
+        userInfo.setName(userAuthVo.getName());
+        //其他认证信息
+        userInfo.setCertificatesType(userAuthVo.getCertificatesType());
+        userInfo.setCertificatesNo(userAuthVo.getCertificatesNo());
+        userInfo.setCertificatesUrl(userAuthVo.getCertificatesUrl());
+        userInfo.setAuthStatus(AuthStatusEnum.AUTH_RUN.getStatus());
+
+        //进行信息更新
+        baseMapper.updateById(userInfo);
+    }
+
+    //用户列表(条件查询带分页)
+    @Override
+    public IPage<UserInfo> selectPage(Page<UserInfo> pageParam, UserInfoQueryVo userInfoQueryVo) {
+        //userInfoQueryVo获取条件值
+        String name = userInfoQueryVo.getKeyword();//用户名称
+        Integer status = userInfoQueryVo.getStatus();//用户状态
+        Integer authStatus = userInfoQueryVo.getAuthStatus(); //认证状态
+        String createTimeBegin = userInfoQueryVo.getCreateTimeBegin(); //开始时间
+        String createTimeEnd = userInfoQueryVo.getCreateTimeEnd(); //结束时间
+        //对条件值进行非空判断
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(name)) {
+            wrapper.like("name",name);
+        }
+        if(!StringUtils.isEmpty(status)) {
+            wrapper.eq("status",status);
+        }
+        if(!StringUtils.isEmpty(authStatus)) {
+            wrapper.eq("auth_status",authStatus);
+        }
+        if(!StringUtils.isEmpty(createTimeBegin)) {
+            wrapper.ge("create_time",createTimeBegin);
+        }
+        if(!StringUtils.isEmpty(createTimeEnd)) {
+            wrapper.le("create_time",createTimeEnd);
+        }
+        //调用mapper的方法
+        IPage<UserInfo> pages = baseMapper.selectPage(pageParam, wrapper);
+        //编号变成对应值封装
+        pages.getRecords().stream().forEach(item -> {
+            this.packageUserInfo(item);
+        });
+        return pages;
+    }
+    //锁定
+    @Override
+    public void lock(Long userId, Integer status) {
+        if (status.intValue()==0||status.intValue()==1){
+            UserInfo userInfo = this.getById(userId);
+            userInfo.setStatus(status);
+            this.updateById(userInfo);
+        }
+    }
+    //用户详情
+    @Override
+    public Map<String, Object> show(Long userId) {
+        Map<String,Object> map=new HashMap<>();
+        //根据UserId 查询用户信息
+        UserInfo userInfo = this.packageUserInfo(baseMapper.selectById(userId));
+        map.put("userInfo",userInfo);
+        //根据userId查询就诊人信息
+        List<Patient> patientList = patientService.findAllUserId(userId);
+        map.put("patientList",patientList);
+        return map;
+    }
+    //认证审批
+    @Override
+    public void approval(Long userId, Integer authStatus) {
+        if (authStatus.intValue()==2||authStatus.intValue()==-1){
+            UserInfo userInfo = baseMapper.selectById(userId);
+            userInfo.setAuthStatus(authStatus);
+            baseMapper.updateById(userInfo);
+        }
+    }
+
+    //编号变成对应值封装
+    private UserInfo packageUserInfo(UserInfo userInfo) {
+        //处理认证状态编码
+        userInfo.getParam().put("authStatusString",AuthStatusEnum.getStatusNameByStatus(userInfo.getAuthStatus()));
+        //处理用户状态 0  1
+        String statusString = userInfo.getStatus().intValue()==0 ?"锁定" : "正常";
+        userInfo.getParam().put("statusString",statusString);
         return userInfo;
     }
 }

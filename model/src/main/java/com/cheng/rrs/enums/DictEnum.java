@@ -5,6 +5,7 @@ public enum DictEnum {
 
     HOSTYPE("Hostype", "医院等级"),
     CERTIFICATES_TYPE("CertificatesType", "证件类型"),
+
     ;
 
     private String dictCode;

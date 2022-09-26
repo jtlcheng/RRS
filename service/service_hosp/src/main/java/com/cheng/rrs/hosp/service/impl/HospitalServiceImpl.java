@@ -1,13 +1,22 @@
 package com.cheng.rrs.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheng.rrs.cmn.client.DictFeignClient;
+import com.cheng.rrs.common.exception.YyghException;
+import com.cheng.rrs.common.result.ResultCodeEnum;
+import com.cheng.rrs.hosp.mapper.HospitalSetMapper;
 import com.cheng.rrs.hosp.repository.HospitalRepository;
 import com.cheng.rrs.hosp.service.HospitalService;
 import com.cheng.rrs.model.hosp.Hospital;
+import com.cheng.rrs.model.hosp.HospitalSet;
 import com.cheng.rrs.vo.hosp.HospitalQueryVo;
+import com.cheng.rrs.vo.order.SignInfoVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +31,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Service
-public class HospitalServiceImpl implements HospitalService {
+public class HospitalServiceImpl extends ServiceImpl<HospitalSetMapper,HospitalSet> implements HospitalService {
 
     @Autowired
     private HospitalRepository hospitalRepository;
@@ -141,8 +150,24 @@ public class HospitalServiceImpl implements HospitalService {
         return result;
     }
 
+    //获取医院签名信息
+    @Override
+    public SignInfoVo getSignInfoVo(String hoscode) {
+        QueryWrapper<HospitalSet> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("hoscode",hoscode);
+        HospitalSet hospitalSet = baseMapper.selectOne(queryWrapper);
+        if (hospitalSet==null){
+            throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
+        }
+        SignInfoVo signInfoVo=new SignInfoVo();
+        signInfoVo.setApiUrl(hospitalSet.getApiUrl());
+        signInfoVo.setSignKey(hospitalSet.getSignKey());
+        return signInfoVo;
+    }
+
     //获取查询list集合，遍历进行医院等级封装
-    private Hospital setHospitalHosType(Hospital hospital) {
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
+    public Hospital setHospitalHosType(Hospital hospital) {
         //根据dictCode和valu获取医院等级名称
         String hostypeString = dictFeignClient.getName("Hostype", hospital.getHostype());
         //查询省 市 区

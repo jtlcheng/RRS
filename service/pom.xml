@@ -16,6 +16,8 @@
         <module>service_hosp</module>
         <module>service_cmn</module>
         <module>service-msm</module>
+        <module>service-oos</module>
+        <module>service-order</module>
     </modules>
 
     <properties>

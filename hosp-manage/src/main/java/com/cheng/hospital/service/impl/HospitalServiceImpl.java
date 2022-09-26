@@ -36,14 +36,17 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public Map<String, Object> submitOrder(Map<String, Object> paramMap) {
         log.info(JSONObject.toJSONString(paramMap));
+        System.out.println("log.info(JSONObject.toJSONString(paramMap)):"+JSONObject.toJSONString(paramMap));
         String hoscode = (String)paramMap.get("hoscode");
         String depcode = (String)paramMap.get("depcode");
-        String hosScheduleId = (String)paramMap.get("hosScheduleId");
+        String hosScheduleId = (String) paramMap.get("hosScheduleId");
         String reserveDate = (String)paramMap.get("reserveDate");
         String reserveTime = (String)paramMap.get("reserveTime");
         String amount = (String)paramMap.get("amount");
 
-        Schedule schedule = this.getSchedule(hosScheduleId);
+//        Schedule schedule = this.getSchedule(hosScheduleId);
+        Schedule schedule = this.getSchedule("1L");
+        System.out.println("schedule:"+schedule);
         if(null == schedule) {
             throw new YyghException(ResultCodeEnum.DATA_ERROR);
         }
@@ -69,7 +72,7 @@ public class HospitalServiceImpl implements HospitalService {
             //记录预约记录
             OrderInfo orderInfo = new OrderInfo();
             orderInfo.setPatientId(patientId);
-            orderInfo.setScheduleId(Long.parseLong(hosScheduleId));
+            orderInfo.setScheduleId (2L);
             int number = schedule.getReservedNumber().intValue() - schedule.getAvailableNumber().intValue();
             orderInfo.setNumber(number);
             orderInfo.setAmount(new BigDecimal(amount));

@@ -3,10 +3,14 @@ package com.cheng.rrs.hosp.controller.api;
 import com.cheng.rrs.common.result.Result;
 import com.cheng.rrs.hosp.service.DepartmentService;
 import com.cheng.rrs.hosp.service.HospitalService;
+import com.cheng.rrs.hosp.service.ScheduleService;
 import com.cheng.rrs.model.hosp.Department;
 import com.cheng.rrs.model.hosp.Hospital;
+import com.cheng.rrs.model.hosp.Schedule;
 import com.cheng.rrs.vo.hosp.DepartmentVo;
 import com.cheng.rrs.vo.hosp.HospitalQueryVo;
+import com.cheng.rrs.vo.hosp.ScheduleOrderVo;
+import com.cheng.rrs.vo.order.SignInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,8 @@ public class HospApiController {
     private HospitalService hospitalService;
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private ScheduleService scheduleService;
 
     /**
     * @Description:  查询医院列表功能
@@ -90,5 +96,80 @@ public class HospApiController {
     public Result item(@PathVariable String hoscode){
         Map<String,Object> map=hospitalService.item(hoscode);
         return Result.ok(map);
+    }
+    //获取可预约排班数据
+    /**
+    * @Description: 获取可预约排班数据
+    * @Param: page limit hoscode depcode
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/9/20 14:23
+    */
+    @ApiOperation("获取可预约排班数据")
+    @GetMapping("auth/getBookingScheduleRule/{page}/{limit}/{hoscode}/{depcode}")
+    public Result getBookingSchedule(@PathVariable Integer page,
+                                     @PathVariable Integer limit,
+                                     @PathVariable String hoscode,
+                                     @PathVariable String depcode){
+        Map<String, Object> ruleSchedule =
+                scheduleService.getBookingRuleSchedule(page, limit, hoscode, depcode);
+        return Result.ok(ruleSchedule);
+    }
+    //获取排班数据
+    /**
+    * @Description: 获取排班数据
+    * @Param: hoscode  depcode workDate
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/9/20 14:30
+    */
+    @ApiOperation("获取排班数据")
+    @GetMapping("auth/findScheduleList/{hoscode}/{depcode}/{workDate}")
+    public Result findScheduleList(@PathVariable String hoscode,
+                                   @PathVariable String depcode,
+                                   @PathVariable String workDate){
+        List<Schedule> detailSchedule = scheduleService.getDetailSchedule(hoscode, depcode, workDate);
+        return Result.ok(detailSchedule);
+    }
+    //根据排班id获取排版数据
+    /**
+    * @Description: 根据排班id获取排班数据
+    * @Param: scheduleId
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/9/23 8:57
+    */
+    @ApiOperation("根据排班id获取排班数据")
+    @GetMapping("auth/getSchedule/{scheduleId}")
+    public Result getSchedule(@PathVariable String scheduleId ){
+        return Result.ok(scheduleService.getById(scheduleId));
+
+    }
+    //根据排班id获取预约下单数据
+    /**
+    * @Description: 根据排班id获取预约下单数据
+    * @Param: scheduleId
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/9/23 11:21
+    */
+    @ApiOperation("根据排班id获取预约下单数据")
+    @GetMapping("inner/getScheduleOrderVo/{scheduleId}")
+    public ScheduleOrderVo getScheduleOrderVo(@PathVariable String scheduleId){
+        return scheduleService.getScheduleOrderVo(scheduleId);
+    }
+
+    //获取医院签名信息
+    /**
+    * @Description: 获取医院签名信息
+    * @Param: hoscode
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/9/23 12:48
+    */
+    @ApiOperation("获取医院签名信息")
+    @GetMapping("inner/getSignInfoVo/{hoscode}")
+    public SignInfoVo getSignInfoVo(@PathVariable String hoscode){
+        return hospitalService.getSignInfoVo(hoscode);
     }
 }

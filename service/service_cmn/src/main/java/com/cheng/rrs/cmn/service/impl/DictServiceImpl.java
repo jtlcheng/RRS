@@ -101,7 +101,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             wrapper.eq("value",value);
             Dict dict = baseMapper.selectOne(wrapper);
             return dict.getName();
-        }else {//如果dictCode为空，根据dictCode和value查询
+        }else {
             //根据dictCode查询dict对象，得到dict的id值
             Dict codeDict = this.getDictByDictCode(dictCode);
             Long parentId = codeDict.getId();

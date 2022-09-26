@@ -23,4 +23,7 @@ public interface DepartmentService {
 
     //根据医院编号、科室编号、工作日期查询排班信息
     String getDepartmentName(String hoscode, String depcode);
+
+    //获取部门
+    Department getDepartment(String hoscdoe, String depcode);
 }

@@ -8,16 +8,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="common_util" />
-        <module name="service-msm" />
         <module name="service_user" />
         <module name="service-gateway" />
         <module name="service-cmn-client" />
+        <module name="service-oos" />
+        <module name="service-user-client" />
+        <module name="service-hosp-client" />
+        <module name="hosp-manage" />
+        <module name="service-order" />
+        <module name="service_cmn" />
+        <module name="common_util" />
+        <module name="service-msm" />
+        <module name="rabbit-util" />
         <module name="service_util" />
         <module name="model" />
-        <module name="hosp-manage" />
         <module name="service_hosp" />
-        <module name="service_cmn" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,12 +31,17 @@
       <module name="hosp-manage" target="1.8" />
       <module name="host-manage" target="1.8" />
       <module name="model" target="1.8" />
+      <module name="rabbit-util" target="1.8" />
       <module name="RRS_PARENT" target="1.8" />
       <module name="service" target="1.8" />
       <module name="service-client" target="1.8" />
       <module name="service-cmn-client" target="1.8" />
       <module name="service-gateway" target="1.8" />
+      <module name="service-hosp-client" target="1.8" />
       <module name="service-msm" target="1.8" />
+      <module name="service-oos" target="1.8" />
+      <module name="service-order" target="1.8" />
+      <module name="service-user-client" target="1.8" />
       <module name="service_cmn" target="1.8" />
       <module name="service_hosp" target="1.8" />
       <module name="service_user" target="1.8" />
@@ -46,11 +56,16 @@
       <module name="hosp-manage" options="-parameters" />
       <module name="host-manage" options="-parameters" />
       <module name="model" options="-parameters" />
+      <module name="rabbit-util" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="service-client" options="-parameters" />
       <module name="service-cmn-client" options="-parameters" />
       <module name="service-gateway" options="-parameters" />
+      <module name="service-hosp-client" options="-parameters" />
       <module name="service-msm" options="-parameters" />
+      <module name="service-oos" options="-parameters" />
+      <module name="service-order" options="-parameters" />
+      <module name="service-user-client" options="-parameters" />
       <module name="service_cmn" options="-parameters" />
       <module name="service_hosp" options="-parameters" />
       <module name="service_user" options="-parameters" />

@@ -1,13 +1,16 @@
 package com.cheng.rrs.hosp.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cheng.rrs.model.hosp.Hospital;
+import com.cheng.rrs.model.hosp.HospitalSet;
 import com.cheng.rrs.vo.hosp.HospitalQueryVo;
+import com.cheng.rrs.vo.order.SignInfoVo;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
 
-public interface HospitalService {
+public interface HospitalService extends IService<HospitalSet> {
     //上传医院接口
     void save(Map<String, Object> map);
     //根据医院编号查询
@@ -24,4 +27,6 @@ public interface HospitalService {
     List<Hospital> findByHosname(String hosname);
     //根据医院编号获取医院挂号预约详情
     Map<String, Object> item(String hoscode);
+    //获取医院签名信息
+    SignInfoVo getSignInfoVo(String hoscode);
 }

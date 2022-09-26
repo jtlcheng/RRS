@@ -6,8 +6,6 @@ import com.cheng.hospital.util.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,15 +34,24 @@ public class HospitalController {
 	 */
 	@PostMapping("/order/submitOrder")
 	public Result AgreeAccountLendProject(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("-----------------");
 		try {
 			Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
-			if(!HttpRequestHelper.isSignEquals(paramMap, apiService.getSignKey())) {
+			System.out.println("paramMap:"+paramMap);
+		/*	if(!HttpRequestHelper.isSignEquals(paramMap, apiService.getSignKey())) {
+				throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+			}*/
+			if (!paramMap.get("sign").equals(apiService.getSignKey())){
+
 				throw new YyghException(ResultCodeEnum.SIGN_ERROR);
 			}
-
 			Map<String, Object> resultMap = hospitalService.submitOrder(paramMap);
+
+			System.out.println("resultMap:"+resultMap);
+
 			return Result.ok(resultMap);
 		} catch (YyghException e) {
+
 			return Result.fail().message(e.getMessage());
 		}
 	}

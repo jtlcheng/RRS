@@ -55,6 +55,7 @@ public class DictController {
     @ApiOperation("根据父id查询子数据列表")
     @GetMapping("findChildData/{id}")
     public Result findChildData(@PathVariable Long id){
+        System.out.println(1);
         List<Dict> list = dictService.findChildData(id);
         return Result.ok(list);
     }

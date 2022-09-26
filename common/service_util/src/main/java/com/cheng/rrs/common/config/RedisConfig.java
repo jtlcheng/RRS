@@ -39,6 +39,7 @@ public class RedisConfig {
                 for (Object obj : params) {
                     sb.append(obj.toString());
                 }
+                System.out.println("sb:"+sb.toString());
                 return sb.toString();
             }
         };

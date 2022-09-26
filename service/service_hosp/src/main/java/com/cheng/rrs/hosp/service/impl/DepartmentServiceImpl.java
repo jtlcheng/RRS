@@ -54,10 +54,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
+    //查询科室接口
     @Override
     public Page<Department> findPageDepartment(Integer page, Integer limit, DepartmentQueryVo departmentQueryVo) {
-
-
         //0是第一页
         //创建Pageable对象,设置当前页和每页记录数
         Pageable pageable= PageRequest.of(page-1,limit);
@@ -138,5 +137,12 @@ public class DepartmentServiceImpl implements DepartmentService {
             return department.getDepname();
         }
         return null;
+    }
+
+    //获取部门
+    @Override
+    public Department getDepartment(String hoscdoe, String depcode) {
+        return departmentRepository.getDepartmentByHoscodeAndDepcode(hoscdoe, depcode);
+
     }
 }
