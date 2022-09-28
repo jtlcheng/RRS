@@ -4,6 +4,7 @@ import com.cheng.rrs.model.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,9 +23,14 @@ import java.util.Date;
 @Data
 @ApiModel(description = "Order")
 @TableName("order_info")
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class OrderInfo extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+
+	@ApiModelProperty(value = "id")
+	@TableField("id")
+	private Long id;
 
 	@ApiModelProperty(value = "userId")
 	@TableField("user_id")

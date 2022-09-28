@@ -10,6 +10,7 @@ public enum OrderStatusEnum {
     PAID(1,"已支付" ),
     GET_NUMBER(2,"已取号" ),
     CANCLE(-1,"取消预约"),
+    OVERDUE(3,"已过期"),
     ;
 
     private Integer status;
@@ -57,4 +58,5 @@ public enum OrderStatusEnum {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
 }

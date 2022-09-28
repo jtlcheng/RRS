@@ -1,6 +1,10 @@
 package com.cheng.rrs.order.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheng.rrs.common.exception.YyghException;
 import com.cheng.rrs.common.helper.HttpRequestHelper;
@@ -18,16 +22,18 @@ import com.cheng.rrs.user.client.PatientFeignClient;
 import com.cheng.rrs.vo.hosp.ScheduleOrderVo;
 import com.cheng.rrs.vo.msm.MsmVo;
 import com.cheng.rrs.vo.order.OrderMqVo;
+import com.cheng.rrs.vo.order.OrderQueryVo;
 import com.cheng.rrs.vo.order.SignInfoVo;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @package: com.cheng.rrs.order.service
@@ -175,5 +181,117 @@ public class OrderInfoInfoServiceImpl extends ServiceImpl<OrderInfoMapper, Order
             throw new YyghException(result.getString("message"), ResultCodeEnum.FAIL.getCode());
         }
         return orderInfo.getId();
+    }
+
+    //订单列表 条件查询带分页
+    @Override
+    public IPage<OrderInfo> selectPage(Page<OrderInfo> pageParam, OrderQueryVo orderQueryVo) {
+
+        this.getDate();
+
+        //orderQueryVo 获取条件值
+        String name = orderQueryVo.getHosname();//医院名称
+        Long userId = orderQueryVo.getUserId();//会员id
+        Long patientId = orderQueryVo.getPatientId();//就诊人id
+        String patientName = orderQueryVo.getPatientName();//就诊人名称
+        String orderStatus = orderQueryVo.getOrderStatus();//订单状态
+        String reserveDate = orderQueryVo.getReserveDate();//安排时间
+        String createTimeBegin = orderQueryVo.getCreateTimeBegin();//创建时间开始
+        String createTimeEnd = orderQueryVo.getCreateTimeEnd();//创建时间结束
+
+
+        QueryWrapper<OrderInfo> wrapper=new QueryWrapper<>();
+        if (!StringUtils.isEmpty(userId)){
+            wrapper.eq("user_id",userId);
+        }
+        if(!StringUtils.isEmpty(name)) {
+            wrapper.like("hosname",name);
+        }
+        if (!StringUtils.isEmpty(patientName)) {
+            wrapper.eq("patient_name",patientName);
+        }
+        if(!StringUtils.isEmpty(patientId)) {
+            wrapper.eq("patient_id",patientId);
+        }
+        if(!StringUtils.isEmpty(orderStatus)) {
+            wrapper.eq("order_status",orderStatus);
+        }
+        if(!StringUtils.isEmpty(reserveDate)) {
+            wrapper.ge("reserve_date",reserveDate);
+        }
+        if(!StringUtils.isEmpty(createTimeBegin)) {
+            wrapper.ge("create_time",createTimeBegin);
+        }
+        if(!StringUtils.isEmpty(createTimeEnd)) {
+            wrapper.le("create_time",createTimeEnd);
+        }
+
+        System.out.println("wrapper:"+wrapper);
+        //调用mapper方法
+        Page<OrderInfo> pages = baseMapper.selectPage(pageParam, wrapper);
+
+
+
+        System.out.println("pages:"+pages);
+        //编号变成对应值封装
+        pages.getRecords().stream().forEach(item->{
+            this.packOrderInfo(item);
+        });
+        return pages;
+    }
+
+    //获取订单详情根据id
+    @Override
+    public OrderInfo getOrder(String orderId) {
+        OrderInfo orderInfo = baseMapper.selectById(orderId);
+        return this.packOrderInfo(orderInfo);
+    }
+
+    //获取订单
+    @Override
+    public Map<String, Object> show(Long id) {
+        Map<String,Object> map=new HashMap<>();
+        OrderInfo orderInfo = this.packOrderInfo(this.getById(id));
+        map.put("orderInfo",orderInfo);
+        Patient patient =
+                patientFeignClient.getPatientOrder(orderInfo.getPatientId());
+        map.put("patient",patient);
+        return map;
+    }
+
+
+    public List<OrderInfo> getDate() {
+        Date date=new Date();
+        Calendar calendar=new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE,1);
+        date=calendar.getTime();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        String format = simpleDateFormat.format(date);
+        List<OrderInfo> orderInfos=null;
+        try {
+            Date parse = simpleDateFormat.parse(format);
+             orderInfos =
+                    baseMapper.selectList(new LambdaQueryWrapper<OrderInfo>().select(OrderInfo::getId,OrderInfo::getReserveDate));
+            for (OrderInfo orderInfo : orderInfos) {
+                if (orderInfo.getReserveDate().compareTo(parse)<0){
+                    System.out.println("orderInfos:"+orderInfos);
+                    System.out.println("orderInfos:"+orderInfo.getId());
+                    orderInfo.setId(orderInfo.getId());
+                    orderInfo.setOrderStatus(3);
+                    baseMapper.updateById(orderInfo);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return orderInfos;
+    }
+
+
+    private OrderInfo packOrderInfo(OrderInfo orderInfo) {
+        orderInfo.getParam().
+                put("orderStatusString",OrderStatusEnum.getStatusNameByStatus(orderInfo.getOrderStatus()));
+        return orderInfo;
     }
 }

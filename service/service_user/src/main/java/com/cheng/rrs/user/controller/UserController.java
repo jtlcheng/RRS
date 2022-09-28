@@ -9,10 +9,7 @@ import com.cheng.rrs.vo.user.UserInfoQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -38,10 +35,10 @@ public class UserController {
     */
     @ApiOperation("用户列表(条件查询带分页)")
     @GetMapping("userInfo/{page}/{limit}")
-    public Result getListPageByCondition(@PathVariable Long page,
-                                         @PathVariable Long limit,
+    public Result getListPageByCondition(@PathVariable long page,
+                                         @PathVariable long limit,
                                          UserInfoQueryVo userInfoQueryVo){
-        Page<UserInfo> pageParam=new Page<>();
+        Page<UserInfo> pageParam=new Page<>(page,limit);
         IPage<UserInfo> pageModel = userInfoService.selectPage(pageParam,userInfoQueryVo);
         return Result.ok(pageModel);
     }

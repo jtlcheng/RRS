@@ -1,11 +1,13 @@
 package com.cheng.rrs.vo.order;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
 @ApiModel(description = "Order")
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class OrderQueryVo {
 
 
@@ -22,7 +24,7 @@ public class OrderQueryVo {
 	private String patientName;
 
 	@ApiModelProperty(value = "医院名称")
-	private String keyword;
+	private String hosname;
 
 	@ApiModelProperty(value = "订单状态")
 	private String orderStatus;
