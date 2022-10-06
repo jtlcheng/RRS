@@ -88,9 +88,16 @@ public class HttpRequestHelper {
                         .append(param.getValue()).append("&");
             }
             log.info(String.format("--> 发送请求：post data %1s", postdata));
-            byte[] reqData = postdata.toString().getBytes("utf-8");
+            byte[] reqData = postdata.toString().getBytes();
+            String reqDatas=new String(reqData);
+            System.out.println("reqDatas:"+reqDatas);
             byte[] respdata = HttpUtil.doPost(url,reqData);
+            String str=new String(respdata);
+            System.out.println("str:"+str);
+            System.out.println("reqData:"+reqData.toString());
+            System.out.println("respdata:"+respdata.toString());
             result = new String(respdata);
+            System.out.println("result:"+result);
             log.info(String.format("--> 应答结果：result data %1s", result));
         } catch (Exception ex) {
             ex.printStackTrace();

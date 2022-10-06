@@ -9,11 +9,15 @@
     <file url="file://$PROJECT_DIR$/model/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-client/service-cmn-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-client/service-hosp-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-client/service-order-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-client/service-user-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/service-msm/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/service-oos/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/service-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/service-order/src/main/resources/cert/apiclient_cert.p12" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/service/service-statistics/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service/service-task/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/service_cmn/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/service_hosp/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service/service_user/src/main/java" charset="UTF-8" />

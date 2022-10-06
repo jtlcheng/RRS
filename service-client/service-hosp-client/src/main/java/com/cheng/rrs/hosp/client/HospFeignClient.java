@@ -1,5 +1,6 @@
 package com.cheng.rrs.hosp.client;
 
+import com.cheng.rrs.model.hosp.Schedule;
 import com.cheng.rrs.vo.hosp.ScheduleOrderVo;
 import com.cheng.rrs.vo.order.SignInfoVo;
 import io.swagger.annotations.ApiOperation;
@@ -35,5 +36,6 @@ public interface HospFeignClient {
     @ApiOperation("获取医院签名信息")
     @GetMapping("/api/hosp/hospital/inner/getSignInfoVo/{hoscode}")
     SignInfoVo getSignInfoVo(@PathVariable String hoscode);
+
 
 }

@@ -12,13 +12,16 @@
         <module name="service-gateway" />
         <module name="service-cmn-client" />
         <module name="service-oos" />
+        <module name="service-order-client" />
         <module name="service-user-client" />
+        <module name="service-task" />
         <module name="service-hosp-client" />
         <module name="hosp-manage" />
         <module name="service-order" />
         <module name="service_cmn" />
         <module name="common_util" />
         <module name="service-msm" />
+        <module name="service-statistics" />
         <module name="rabbit-util" />
         <module name="service_util" />
         <module name="model" />
@@ -41,6 +44,9 @@
       <module name="service-msm" target="1.8" />
       <module name="service-oos" target="1.8" />
       <module name="service-order" target="1.8" />
+      <module name="service-order-client" target="1.8" />
+      <module name="service-statistics" target="1.8" />
+      <module name="service-task" target="1.8" />
       <module name="service-user-client" target="1.8" />
       <module name="service_cmn" target="1.8" />
       <module name="service_hosp" target="1.8" />
@@ -51,20 +57,23 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="RRS_PARENT" options="-parameters" />
-      <module name="common" options="-parameters" />
+      <module name="common" options="" />
       <module name="common_util" options="-parameters" />
       <module name="hosp-manage" options="-parameters" />
       <module name="host-manage" options="-parameters" />
       <module name="model" options="-parameters" />
       <module name="rabbit-util" options="-parameters" />
-      <module name="service" options="-parameters" />
-      <module name="service-client" options="-parameters" />
+      <module name="service" options="" />
+      <module name="service-client" options="" />
       <module name="service-cmn-client" options="-parameters" />
       <module name="service-gateway" options="-parameters" />
       <module name="service-hosp-client" options="-parameters" />
       <module name="service-msm" options="-parameters" />
       <module name="service-oos" options="-parameters" />
       <module name="service-order" options="-parameters" />
+      <module name="service-order-client" options="-parameters" />
+      <module name="service-statistics" options="-parameters" />
+      <module name="service-task" options="-parameters" />
       <module name="service-user-client" options="-parameters" />
       <module name="service_cmn" options="-parameters" />
       <module name="service_hosp" options="-parameters" />

@@ -65,9 +65,13 @@ public class HospitalController {
 	public Result updatePayStatus(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
-			if(!HttpRequestHelper.isSignEquals(paramMap, apiService.getSignKey())) {
+			if (!paramMap.get("sign").equals(apiService.getSignKey())){
+
 				throw new YyghException(ResultCodeEnum.SIGN_ERROR);
 			}
+			/*if(!HttpRequestHelper.isSignEquals(paramMap, apiService.getSignKey())) {
+				throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+			}*/
 
 			hospitalService.updatePayStatus(paramMap);
 			return Result.ok();
@@ -85,7 +89,10 @@ public class HospitalController {
 	public Result updateCancelStatus(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			Map<String, Object> paramMap = HttpRequestHelper.switchMap(request.getParameterMap());
-			if(!HttpRequestHelper.isSignEquals(paramMap, apiService.getSignKey())) {
+			/*if(!HttpRequestHelper.isSignEquals(paramMap, apiService.getSignKey())) {
+				throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+			}*/
+			if (!paramMap.get("sign").equals(apiService.getSignKey())){
 				throw new YyghException(ResultCodeEnum.SIGN_ERROR);
 			}
 

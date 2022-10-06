@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cheng.rrs.model.order.OrderInfo;
+import com.cheng.rrs.vo.order.OrderCountQueryVo;
 import com.cheng.rrs.vo.order.OrderQueryVo;
 
 import java.util.List;
@@ -23,4 +24,10 @@ public interface OrderInfoService extends IService<OrderInfo> {
     OrderInfo getOrder(String orderId);
     //获取订单
     Map<String,Object> show(Long id);
+    //取消预约
+    Boolean cancelOrder(Long orderId);
+    //就诊通知
+    void patientTips();
+    //预约统计方法
+    Map<String,Object> getCountMap(OrderCountQueryVo orderCountQueryVo);
 }

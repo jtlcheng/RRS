@@ -42,6 +42,7 @@ public class HospitalReceiver {
             schedule.setAvailableNumber(orderMqVo.getAvailableNumber());
             scheduleService.update(schedule);
         }else {
+            //取消预约更新预约数
             Schedule schedule = scheduleService.getById(orderMqVo.getScheduleId());
             int availableNumber=schedule.getAvailableNumber().intValue()+ 1;
             schedule.setAvailableNumber(availableNumber);

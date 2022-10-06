@@ -1,5 +1,6 @@
 package com.cheng.rrs.model.order;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.cheng.rrs.model.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -28,9 +29,6 @@ public class OrderInfo extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@ApiModelProperty(value = "id")
-	@TableField("id")
-	private Long id;
 
 	@ApiModelProperty(value = "userId")
 	@TableField("user_id")

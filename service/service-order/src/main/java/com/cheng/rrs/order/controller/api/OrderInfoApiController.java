@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
 
 /**
  * @package: com.cheng.rrs.order.controller
@@ -79,11 +79,34 @@ public class OrderInfoApiController {
         return Result.ok(OrderStatusEnum.getStatusList());
     }
 
+    /**
+     * @Description: 获取订单详情根据id
+     * @Param:  orderId
+     * @return:
+     * @Author: cheng
+     * @Date: 2022/9/27 10:54
+     */
     //获取订单详情
     @ApiOperation("获取订单详情根据id")
     @GetMapping("auth/getOrders/{orderId}")
     public Result getOrders(@PathVariable String orderId){
+        System.out.println("orderId:"+orderId);
         OrderInfo orderInfo=orderInfoService.getOrder(orderId);
+        System.out.println("orderInfo:"+orderInfo);
         return Result.ok(orderInfo);
+    }
+    //取消预约
+    /**
+    * @Description: 取消预约
+    * @Param:  orderId
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/10/2 15:00
+    */
+    @ApiOperation("取消预约")
+    @GetMapping("auth/cancelOrder/{orderId}")
+    public Result cancelOrder(@PathVariable Long orderId){
+        Boolean isOrder = orderInfoService.cancelOrder(orderId);
+        return Result.ok(isOrder);
     }
 }

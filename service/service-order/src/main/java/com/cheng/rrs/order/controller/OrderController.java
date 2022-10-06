@@ -6,14 +6,14 @@ import com.cheng.rrs.common.result.Result;
 import com.cheng.rrs.enums.OrderStatusEnum;
 import com.cheng.rrs.model.order.OrderInfo;
 import com.cheng.rrs.order.service.OrderInfoService;
+import com.cheng.rrs.vo.order.OrderCountQueryVo;
 import com.cheng.rrs.vo.order.OrderQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @package: com.cheng.rrs.order.controller
@@ -70,5 +70,18 @@ public class OrderController {
     @GetMapping("show/{id}")
     public Result getOrder(@PathVariable Long id){
         return Result.ok(orderInfoService.show(id));
+    }
+    //获取预约统计数据方法
+    /**
+    * @Description: 获取预约统计数据方法
+    * @Param: orderCountQueryVo
+    * @return:
+    * @Author: cheng
+    * @Date: 2022/10/3 12:12
+    */
+    @ApiOperation("获取预约统计数据方法")
+    @PostMapping("inner/getCountMap")
+    public Map<String,Object> getCountMap(@RequestBody OrderCountQueryVo orderCountQueryVo){
+        return orderInfoService.getCountMap(orderCountQueryVo);
     }
 }

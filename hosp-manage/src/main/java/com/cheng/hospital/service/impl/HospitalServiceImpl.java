@@ -65,14 +65,15 @@ public class HospitalServiceImpl implements HospitalService {
 
         Map<String, Object> resultMap = new HashMap<>();
         int availableNumber = schedule.getAvailableNumber().intValue() - 1;
-        if(availableNumber > 0) {
+        System.out.println("availableNumber:"+availableNumber);
+        if(availableNumber >= 0) {
             schedule.setAvailableNumber(availableNumber);
             hospitalMapper.updateById(schedule);
 
             //记录预约记录
             OrderInfo orderInfo = new OrderInfo();
             orderInfo.setPatientId(patientId);
-            orderInfo.setScheduleId (2L);
+            orderInfo.setScheduleId (1L);
             int number = schedule.getReservedNumber().intValue() - schedule.getAvailableNumber().intValue();
             orderInfo.setNumber(number);
             orderInfo.setAmount(new BigDecimal(amount));
@@ -124,13 +125,22 @@ public class HospitalServiceImpl implements HospitalService {
         String hosRecordId = (String)paramMap.get("hosRecordId");
 
         OrderInfo orderInfo = orderInfoMapper.selectById(hosRecordId);
+        Schedule schedule = this.getSchedule("1L");
+
         if(null == orderInfo) {
             throw new YyghException(ResultCodeEnum.DATA_ERROR);
         }
+
+
+
         //已取消
         orderInfo.setOrderStatus(-1);
         orderInfo.setQuitTime(new Date());
         orderInfoMapper.updateById(orderInfo);
+        //取消预约 数据库预约数量加1
+        int availableNumber = schedule.getAvailableNumber().intValue() + 1;
+        schedule.setAvailableNumber(availableNumber);
+        hospitalMapper.updateById(schedule);
     }
 
     private Schedule getSchedule(String frontSchId) {

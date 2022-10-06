@@ -16,6 +16,9 @@
       <module fileurl="file://$PROJECT_DIR$/service/service-msm/service-msm.iml" filepath="$PROJECT_DIR$/service/service-msm/service-msm.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service-oos/service-oos.iml" filepath="$PROJECT_DIR$/service/service-oos/service-oos.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service-order/service-order.iml" filepath="$PROJECT_DIR$/service/service-order/service-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-client/service-order-client/service-order-client.iml" filepath="$PROJECT_DIR$/service-client/service-order-client/service-order-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/service-statistics/service-statistics.iml" filepath="$PROJECT_DIR$/service/service-statistics/service-statistics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/service-task/service-task.iml" filepath="$PROJECT_DIR$/service/service-task/service-task.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-client/service-user-client/service-user-client.iml" filepath="$PROJECT_DIR$/service-client/service-user-client/service-user-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service_cmn/service_cmn.iml" filepath="$PROJECT_DIR$/service/service_cmn/service_cmn.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service_hosp/service_hosp.iml" filepath="$PROJECT_DIR$/service/service_hosp/service_hosp.iml" />
